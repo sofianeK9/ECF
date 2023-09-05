@@ -1,17 +1,26 @@
 <?php
-
+// ce fichier se trouve dans le dossier datafixtures
 namespace App\DataFixtures;
 
+// Ici on fait appelle aux classes que l'on utilise pour créér des données fictives ainsi qu'au dependance (gestionnaire d'objet->manager)
+// qui permettent de créer des donées fictives, et de faire des operations d'écritures.
 use App\Entity\User;
 use App\Entity\Auteur;
 use App\Entity\Genre;
 use App\Entity\Livre;
+
+// Fournit des méthodes pour la création de données fictives
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+
+// C'est le gestionnaire d'objet
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
+
+// Permet de hascher le mot de passe
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+// Cette classe contient un constructeur et des propriétés privées pour la création de données et de gestion de ces données.
 class TestFixtures extends Fixture implements FixtureGroupInterface
 {
     private $faker;
@@ -23,22 +32,27 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
         $this->faker = FakerFactory::create('fr_FR');
         $this->hasher = $hasher;
     }
-
+    // Cette méthode précise à quelle groupe la classe appartient -> au groupe test.
     public static function getGroups(): array
     {
         return ['test'];
     }
 
+    // Cette méthode est utilisée pour charger les données de test dans la BDD à l'aide de Doctrine (qui est un gestionnaire d'objet)
     public function load(ObjectManager $manager): void
     {
+        //  Cette ligne de code assigne l'objet $manager passé en argument à l'attribut $manager de la classe AppFixtures
+        // Grace à ca, cela permet à la classe d'accéder au gestionnaire d'objet tout au long de la méthode load.
         $this->manager = $manager;
         $this->loadAuteurs();
         $this->loadGenres();
         $this->loadLivres();
     }
 
+    // Méthode qui permet de créér les données Auteur
     public function loadAuteurs(): void
     {
+        // Permet de de faire des opérations d'ajout, modifications d'auteurs.
         $repository = $this->manager->getRepository(Auteur::class);
 
         // données statiques
@@ -65,8 +79,6 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
             ],
         ];
-
-        // données dynamiques
 
         foreach ($datas as $data) {
             $auteur = new Auteur();
