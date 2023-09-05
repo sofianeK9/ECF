@@ -2,14 +2,14 @@
 // ce fichier se trouve dans le dossier datafixtures
 namespace App\DataFixtures;
 
-// Ici on fait appelle aux classes que l'on utilise pour créér des données fictives ainsi qu'au dependance (gestionnaire d'objet->manager)
-// qui permettent de créer des donées fictives, et de faire des operations d'écritures.
+// Ici on fait appelle aux classes que l'on utilise pour créér des données fictives 
 use App\Entity\User;
 use App\Entity\Auteur;
 use App\Entity\Genre;
 use App\Entity\Livre;
 
-// Fournit des méthodes pour la création de données fictives
+// Fournit des méthodes pour la création de données fictives et on appelle des dependances (gestionnaire d'objet->manager)
+// qui permettent de créer des donées fictives, et de faire des operations d'écritures.
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
@@ -79,11 +79,13 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
             ],
         ];
+        // Boucle qui va parcourir le tableau est créé un auteur : si le nom est Cartier et le prénom Hugues -> ces valeurs
+        // sont définies pour l'auteur nouvellement créé.
 
         foreach ($datas as $data) {
             $auteur = new Auteur();
             $auteur->setNom($data['nom']);
-            $auteur->setPrenom($data['nom']);
+            $auteur->setPrenom($data['prenom']);
 
             $this->manager->persist($auteur);
         }
@@ -92,10 +94,10 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
     public function loadGenres(): void
     {
+        // Cette méthode est utilisée pour charger les données de test dans la BDD à l'aide de Doctrine (qui est un gestionnaire d'objet)
         $repository = $this->manager->getRepository(Genre::class);
 
         // données statiques
-
         $datas = [
             [
                 'nom' => 'poesie',
@@ -159,8 +161,10 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
         }
         $this->manager->flush();
     }
+
     public function loadLivres(): void
     {
+        // Cette méthode est utilisée pour charger les données de test dans la BDD à l'aide de Doctrine (qui est un gestionnaire d'objet)
         $repositoryAuteur = $this->manager->getRepository(Auteur::class);
         $auteurs = $repositoryAuteur->findAll();
         $auteur1 = $repositoryAuteur->find(1);
