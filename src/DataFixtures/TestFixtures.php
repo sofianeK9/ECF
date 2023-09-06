@@ -422,7 +422,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
 
             $emprunteur = $this->faker->randomElement($emprunteurs);
-            $emprunt->setLivre($emprunteur);
+            $emprunt->setEmprunteur($emprunteur);
 
             $this->manager->persist($emprunt);
         }
