@@ -3,11 +3,13 @@
 namespace App\DataFixtures;
 
 // Ici on fait appelle aux classes que l'on utilise pour créér des données fictives 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Auteur;
 use App\Entity\Genre;
 use App\Entity\Livre;
 use App\Entity\Emprunteur;
+use App\Entity\Emprunt;
 
 // Fournit des méthodes pour la création de données fictives et on appelle des dependances (gestionnaire d'objet->manager)
 // qui permettent de créer des donées fictives, et de faire des operations d'écritures.
@@ -49,6 +51,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
         $this->loadGenres();
         $this->loadLivres();
         $this->loadEmprunteurs();
+        $this->loadEmprunts();
     }
 
     // Méthode qui permet de créér les données Auteur
@@ -292,7 +295,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
             $this->manager->persist($user);
 
             $emprunteur = new Emprunteur();
-            
+
             $emprunteur->setNom($data['nom']);
             $emprunteur->setPrenom($data['prenom']);
             $emprunteur->setTel($data['tel']);
@@ -300,6 +303,52 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
             $emprunteur->setUser($user);
 
             $this->manager->persist($emprunteur);
+        }
+        $this->manager->flush();
+    }
+
+    public function loadEmprunts(): void
+    {
+        $repositoryLivres = $this->manager->getRepository(Livre::class);
+        $livre1 = $repositoryLivres->find(1);
+        $livre2 = $repositoryLivres->find(2);
+        $livre3 = $repositoryLivres->find(3);
+
+
+        $repositoryEmprunteur = $this->manager->getRepository(Emprunteur::class);
+        $emprunteur1 = $repositoryEmprunteur->find(1);
+        $emprunteur2 = $repositoryEmprunteur->find(2);
+        $emprunteur3 = $repositoryEmprunteur->find(3);
+
+        // données statiques
+        $datas = [
+            [
+                'dateEmprunt' => new DateTime('2020-02-01 10:00:00'),
+                'dateRetour' => new DateTime('2020-03-01 10:00:00'),
+                'emprunteur' => [$emprunteur1],
+                'livre' => [$livre1],
+            ],
+            [
+                'dateEmprunt' => new DateTime('2020-03-01 10:00:00'),
+                'dateRetour' => new DateTime('2020-04-01 10:00:00'),
+                'emprunteur' => [$emprunteur2],
+                'livre' => [$livre2],
+            ],
+            [
+                'dateEmprunt' => new DateTime('2020-04-01 10:00:00'),
+                'dateRetour' => null,
+                'emprunteur' => [$emprunteur3],
+                'livre' => [$livre3],
+            ],
+        ];
+        foreach ($datas as $data) {
+            $emprunt = new Emprunt();
+            $emprunt->setDateEmprunt($data['dateEmprunt']);
+            $emprunt->setDateRetour($data['dateRetour']);
+            $emprunt->setEmprunteur($data['emprunteur'][0]);
+            $emprunt->setLivre($data['livre'][0]);
+
+            $this->manager->persist($emprunt);
         }
         $this->manager->flush();
     }
