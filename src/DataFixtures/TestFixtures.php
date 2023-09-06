@@ -58,7 +58,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
     public function loadAuteurs(): void
     {
         // Permet de de faire des opérations d'ajout, modifications d'auteurs.
-        $repository = $this->manager->getRepository(Auteur::class);
+        // $repository = $this->manager->getRepository(Auteur::class);
 
         // données statiques
 
@@ -250,6 +250,27 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
 
             $this->manager->persist($livre);
+
+            for ($i = 0; $i < 10; $i++) {
+                $livre = new Livre();
+                $words = random_int(2, 5);
+                $livre->setTitre($this->faker->unique()->sentence($words));
+                $livre->setAnneeEdition($this->faker->optional(0.9)->year());
+                $livre->setNombrePages($this->faker->numberBetween(100, 1000));
+                $livre->setCodeIsbn($this->faker->unique()->isbn13());
+
+                $auteur = $this->faker->randomElement($auteurs);
+                $livre->setAuteur($auteur);
+
+                $nbGenres = random_int(1, 3);
+                $shortList = $this->faker->randomElements($genres, $nbGenres);
+
+                foreach ($shortList as $genre) {
+                    $livre->addGenre($genre);
+                }
+                $this->manager->persist($livre);
+            }
+            $this->manager->flush();
         }
         $this->manager->flush();
     }
