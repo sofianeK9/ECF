@@ -364,12 +364,14 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
     public function loadEmprunts(): void
     {
         $repositoryLivres = $this->manager->getRepository(Livre::class);
+        $livres = $repositoryLivres->findAll();
         $livre1 = $repositoryLivres->find(1);
         $livre2 = $repositoryLivres->find(2);
         $livre3 = $repositoryLivres->find(3);
 
 
         $repositoryEmprunteur = $this->manager->getRepository(Emprunteur::class);
+        $emprunteurs = $repositoryEmprunteur->findAll();
         $emprunteur1 = $repositoryEmprunteur->find(1);
         $emprunteur2 = $repositoryEmprunteur->find(2);
         $emprunteur3 = $repositoryEmprunteur->find(3);
@@ -404,7 +406,26 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
             $this->manager->persist($emprunt);
         }
+        // données dynamiques
 
+        for ($i = 0; $i < 10; $i++) {
+            $emprunt = new Emprunt();
+
+            $dateEmprunt = $this->faker->dateTimeBetween(' -1 year', '-6 months');
+            $emprunt->setDateEmprunt($dateEmprunt);
+
+            $dateRetour = $this->faker->optional(0.5)->dateTimeBetween('-6 months', 'now');
+            $emprunt->setDateRetour($dateRetour);
+
+            $livre = $this->faker->randomElement($livres);
+            $emprunt->setLivre($livre);
+
+
+            $emprunteur = $this->faker->randomElement($emprunteurs);
+            $emprunt->setLivre($emprunteur);
+
+            $this->manager->persist($emprunt);
+        }
 
         $this->manager->flush();
     }
