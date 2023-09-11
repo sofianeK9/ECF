@@ -284,7 +284,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
         $datas = [
             [
-                'email' => ' foo.foo@example.com',
+                'email' => 'foo.foo@example.com',
                 'roles' => ['ROLE_USER'],
                 'password' => '123',
                 'enabled' => true,
@@ -295,7 +295,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
             ],
             [
-                'email' => ' bar.bar@example.com',
+                'email' => 'bar.bar@example.com',
                 'roles' => ['ROLE_USER'],
                 'password' => '123',
                 'enabled' => false,
