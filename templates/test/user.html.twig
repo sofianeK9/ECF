@@ -5,6 +5,8 @@
 {% block body %}
  <h1>{{ title1 }}</h1>
 
+ <h2> User </h2>
+
 <h2> - la liste complète de tous les utilisateurs (de la table `user`), triée par ordre alphabétique d'email</h2>
   {% for user in users %}
   <p> {{user.email}} <p>
@@ -42,7 +44,14 @@
 
 <p> {{user.email}} </p>
 
+{% endfor %}
 
 
- {% endfor %}
+<h2> Livre </h2>
+
+  <h2> - la liste complète de tous les livres, triée par ordre alphabétique de titre </h2>
+
+
+
+ 
 {% endblock %} 

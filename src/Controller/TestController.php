@@ -39,5 +39,27 @@ class TestController extends AbstractController
             'roles' => $roles,
             'userFalse' => $userFalse,
         ]);
+
+     
+
+    }
+
+    #[Route('/livre', name: 'app_test_livre')]
+    public function livre(ManagerRegistry $doctrine): Response
+    {
+
+        $em = $doctrine->getManager();
+        $livreRepository = $em->getRepository(Livre::class);
+
+
+
+
+        return $this->render('test/user.html.twig', [
+            'controller_name' => 'TestController',
+        
+        
+        
+        ]);
+
     }
 }
