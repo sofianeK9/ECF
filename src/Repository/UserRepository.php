@@ -40,26 +40,54 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-   /**
-    * @return User[] Returns an array of User objects
-    */
-   public function allUsersOrderByMail(): array
-   {
-       return $this->createQueryBuilder('u')
-           ->andWhere('u.email IS NOT null')
-           ->orderBy('u.email', 'ASC')
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function allUsersOrderByMail(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email IS NOT null')
+            ->orderBy('u.email', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByEmail(string $email): array
+    {
+        return $this->createQueryBuilder('u')
+            ->setParameter('email', "%$email%")
+            ->andWhere('u.email LIKE :email')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function roles(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :roles')
+            ->setParameter('roles', '%ROLE_USER%')
+            ->orderBy('u.email', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function falseEnabled(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.enabled = :false')
+            ->setParameter('false', false)
+            ->orderBy('u.email', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    //    public function findOneBySomeField($value): ?User
+    //    {
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

@@ -22,13 +22,22 @@ class TestController extends AbstractController
 
         $users = $userRepository->allUsersOrderByMail();
 
+        $user1 = $userRepository->find(1);
 
+        $fooFoo = $userRepository->findByEmail("foo.foo@example.com");
+        $roles = $userRepository->roles();
+
+        $userFalse = $userRepository->falseEnabled();
 
 
         return $this->render('test/user.html.twig', [
             'controller_name' => 'TestController',
             'title1' => 'salut ça va',
             'users' => $users,
+            'user1' => $user1,
+            'fooFoo' => $fooFoo,
+            'roles' => $roles,
+            'userFalse' => $userFalse,
         ]);
     }
 }
