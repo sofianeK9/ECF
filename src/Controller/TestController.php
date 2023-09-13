@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Livre;
 use App\Entity\Auteur;
 use App\Entity\Genre;
+use App\Entity\Emprunteur;
 use DateTime;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Doctrine\Persistence\ManagerRegistry;
@@ -113,4 +114,37 @@ class TestController extends AbstractController
 
         ]);
     }
+
+    #[Route('/emprunteur', name: 'app_test_emprunteur')]
+    public function emprunteur(ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $emprunteurRepository = $em->getRepository(Emprunteur::class);
+        $userRepository = $em->getRepository(User::class);
+
+        $allEmprunteur = $emprunteurRepository->findEmprunteur();
+
+        $title = 'titre';
+
+        $emprunteur3 = $emprunteurRepository->find(3);
+
+        $user3 = $userRepository->find(3);
+
+        $findFoo = $emprunteurRepository->findFoo('foo');
+
+        $findTel = $emprunteurRepository->findTel('1234');
+
+
+
+        return $this->render('test/emprunteur.html.twig', [
+            'controller_name' => 'TestController',
+            'title' => $title,
+            'allEmprunteur' => $allEmprunteur,
+            'emprunteur3' => $emprunteur3,
+            'user3' => $user3,
+            'findFoo' => $findFoo,
+            'findTel' => $findTel,
+        ]);
+    }
+
 }

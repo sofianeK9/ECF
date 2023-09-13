@@ -21,20 +21,52 @@ class EmprunteurRepository extends ServiceEntityRepository
         parent::__construct($registry, Emprunteur::class);
     }
 
-//    /**
-//     * @return Emprunteur[] Returns an array of Emprunteur objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Emprunteur[] Returns an array of Emprunteur objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('e')
+    //            ->andWhere('e.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('e.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+    public function findEmprunteur(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->orderBy('e.prenom', 'ASC')
+            ->orderBy('e.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findFoo(string $keyword): array
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.nom LIKE :keyword')
+            ->orWhere('e.prenom LIKE :keyword')
+            ->setParameter('keyword', "%$keyword%")
+            ->orderBy('e.nom', 'ASC')
+            ->orderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findTel(string $keyword): array
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.tel LIKE :keyword')
+            ->setParameter('keyword', "%$keyword%")
+            ->orderBy('e.nom', 'ASC')
+            ->orderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Emprunteur
 //    {
