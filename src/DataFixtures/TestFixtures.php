@@ -10,7 +10,7 @@ use App\Entity\Genre;
 use App\Entity\Livre;
 use App\Entity\Emprunteur;
 use App\Entity\Emprunt;
-
+use DateTimeImmutable;
 // Fournit des méthodes pour la création de données fictives et on appelle des dependances (gestionnaire d'objet->manager)
 // qui permettent de créer des donées fictives, et de faire des operations d'écritures.
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -291,7 +291,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
                 'nom' => 'foo',
                 'prenom' => 'foo',
                 'tel' => '123456789',
-                'createdAt' => DateTime::createFromFormat('Y-m-d H:i:s', '2020-03-01 10:00:00')
+                'createdAt' => new DateTime('2023-03-01 10:00:00')
             ],
             [
                 'email' => 'bar.bar@example.com',
@@ -303,7 +303,9 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
                 'nom' => 'bar',
                 'prenom' => 'bar',
                 'tel' => '123456789',
-                'createdAt' => DateTime::createFromFormat('Y-m-d H:i:s', '2020-03-01 10:00:00')            ],
+                'createdAt' => new DateTime('2023-03-01 10:00:00')
+            ],
+
             [
                 'email' => 'baz.baz@example.com',
                 'roles' => ['ROLE_USER'],
@@ -313,7 +315,8 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
                 'nom' => 'baz',
                 'prenom' => 'baz',
                 'tel' => '123456789',
-                'createdAt' => DateTime::createFromFormat('Y-m-d H:i:s', '2020-03-01 10:00:00')
+                'createdAt' => new DateTime('2023-03-01 10:00:00')
+
 
             ],
         ];

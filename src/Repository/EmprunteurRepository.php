@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Emprunteur;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -67,13 +68,16 @@ class EmprunteurRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function BeforeDate(): array
+    public function findEmprunteurByDateCreatedAt(DateTime $date): array
     {
+
+
         return $this->createQueryBuilder('e')
+            ->select('e')
             ->Where('e.createdAt < :date')
-            ->setParameter('date', new \DateTime('2021-03-01'))
-            ->orderBy('e.nom', 'ASC')
+            ->setParameter('date', $date)
             ->orderBy('e.prenom', 'ASC')
+            ->orderBy('e.nom', 'ASC')
             ->getQuery()
             ->getResult();
     }

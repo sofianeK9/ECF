@@ -7,6 +7,7 @@ use App\Entity\Livre;
 use App\Entity\Auteur;
 use App\Entity\Genre;
 use App\Entity\Emprunteur;
+use App\Entity\Emprunt;
 use DateTime;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Doctrine\Persistence\ManagerRegistry;
@@ -79,7 +80,7 @@ class TestController extends AbstractController
         $newBooks->addGenre($genre2);
         $em->persist($newBooks);
         $em->flush();
-         
+
         // Mise à jour 
 
         $genre5 = $genreRepository->find(5);
@@ -94,7 +95,7 @@ class TestController extends AbstractController
 
         $id123 = $livreRepository->find(123);
 
-        if($id123){
+        if ($id123) {
             $em->remove($id123);
             $em->flush();
         }
@@ -134,7 +135,10 @@ class TestController extends AbstractController
 
         $findTel = $emprunteurRepository->findTel('1234');
 
-        $beforeDate = $emprunteurRepository->BeforeDate();
+        $date = new DateTime('2021-03-01');
+
+        $emprunteursBeforeDate = $emprunteurRepository->findEmprunteurByDateCreatedAt($date);
+      
 
 
 
@@ -146,8 +150,51 @@ class TestController extends AbstractController
             'user3' => $user3,
             'findFoo' => $findFoo,
             'findTel' => $findTel,
-            'beforeDate' => $beforeDate,
+            'emprunteursBeforeDate' => $emprunteursBeforeDate,
+            
         ]);
     }
 
+
+    #[Route('/emprunt', name: 'app_test_emprunt')]
+    public function emprunt(ManagerRegistry $doctrine): Response
+    { 
+        $em = $doctrine->getManager();
+        $empruntRepository = $em->getRepository(Emprunt::class);
+
+        $emprunteurRepository = $em->getRepository(Emprunteur::class);
+
+       
+
+        $title = 'titre 123';
+
+        $value = 10;
+
+        $listeDernierEmprunt = $empruntRepository->listeDerniersEmprunts($value);
+
+        $value2 = $emprunteurRepository->find(2);
+        $emprunteur2 = $empruntRepository->findEmprunt2($value2);
+
+        $value3 = $emprunteurRepository->find(3);
+        $emprunteur3 = $empruntRepository->findEmprunt3($value3);
+
+
+        $value1 = 10;
+        $retourEmprunt = $empruntRepository->listeDerniersEmpruntsRetour($value1);
+
+        $findIsNull = $empruntRepository->findSpecificIsNulll();
+
+        return $this->render('test/emprunt.html.twig', [
+            'controller_name' => 'TestController',
+            'title' => $title,
+            'listeDernierEmprunt' => $listeDernierEmprunt,
+            'emprunteur2' => $emprunteur2,
+            'emprunteur3' => $emprunteur3,
+            'retourEmprunt' => $retourEmprunt,
+            'findIsNull' => $findIsNull,
+            
+        ]);
+    }
+
+    
 }
