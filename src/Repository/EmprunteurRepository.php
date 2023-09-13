@@ -67,7 +67,6 @@ class EmprunteurRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
     public function BeforeDate(): array
     {
         return $this->createQueryBuilder('e')
@@ -78,7 +77,6 @@ class EmprunteurRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
 //    public function findOneBySomeField($value): ?Emprunteur
 //    {
