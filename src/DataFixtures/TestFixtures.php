@@ -286,22 +286,24 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
                 'roles' => ['ROLE_USER'],
                 'password' => '123',
                 'enabled' => true,
+               
 
                 'nom' => 'foo',
                 'prenom' => 'foo',
                 'tel' => '123456789',
-
+                'createdAt' => DateTime::createFromFormat('Y-m-d H:i:s', '2020-03-01 10:00:00')
             ],
             [
                 'email' => 'bar.bar@example.com',
                 'roles' => ['ROLE_USER'],
                 'password' => '123',
                 'enabled' => false,
+          
 
                 'nom' => 'bar',
                 'prenom' => 'bar',
                 'tel' => '123456789',
-            ],
+                'createdAt' => DateTime::createFromFormat('Y-m-d H:i:s', '2020-03-01 10:00:00')            ],
             [
                 'email' => 'baz.baz@example.com',
                 'roles' => ['ROLE_USER'],
@@ -311,7 +313,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
                 'nom' => 'baz',
                 'prenom' => 'baz',
                 'tel' => '123456789',
-
+                'createdAt' => DateTime::createFromFormat('Y-m-d H:i:s', '2020-03-01 10:00:00')
 
             ],
         ];
@@ -323,6 +325,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
             $user->setRoles($data['roles']);
             $user->setEnabled($data['enabled']);
 
+
             $this->manager->persist($user);
 
             $emprunteur = new Emprunteur();
@@ -330,8 +333,10 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
             $emprunteur->setNom($data['nom']);
             $emprunteur->setPrenom($data['prenom']);
             $emprunteur->setTel($data['tel']);
+            $emprunteur->setCreatedAt($data['createdAt']);
 
             $emprunteur->setUser($user);
+           
 
             $this->manager->persist($emprunteur);
         }

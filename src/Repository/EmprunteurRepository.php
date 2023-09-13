@@ -68,6 +68,18 @@ class EmprunteurRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function BeforeDate(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->Where('e.createdAt < :date')
+            ->setParameter('date', new \DateTime('2021-03-01'))
+            ->orderBy('e.nom', 'ASC')
+            ->orderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    public function findOneBySomeField($value): ?Emprunteur
 //    {
 //        return $this->createQueryBuilder('e')

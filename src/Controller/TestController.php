@@ -134,6 +134,8 @@ class TestController extends AbstractController
 
         $findTel = $emprunteurRepository->findTel('1234');
 
+        $beforeDate = $emprunteurRepository->BeforeDate();
+
 
 
         return $this->render('test/emprunteur.html.twig', [
@@ -144,6 +146,7 @@ class TestController extends AbstractController
             'user3' => $user3,
             'findFoo' => $findFoo,
             'findTel' => $findTel,
+            'beforeDate' => $beforeDate,
         ]);
     }
 
