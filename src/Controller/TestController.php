@@ -8,6 +8,7 @@ use App\Entity\Auteur;
 use App\Entity\Genre;
 use App\Entity\Emprunteur;
 use App\Entity\Emprunt;
+use App\Repository\EmpruntRepository;
 use DateTime;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Doctrine\Persistence\ManagerRegistry;
@@ -138,7 +139,7 @@ class TestController extends AbstractController
         $date = new DateTime('2021-03-01');
 
         $emprunteursBeforeDate = $emprunteurRepository->findEmprunteurByDateCreatedAt($date);
-      
+
 
 
 
@@ -151,20 +152,22 @@ class TestController extends AbstractController
             'findFoo' => $findFoo,
             'findTel' => $findTel,
             'emprunteursBeforeDate' => $emprunteursBeforeDate,
-            
+
         ]);
     }
 
 
     #[Route('/emprunt', name: 'app_test_emprunt')]
     public function emprunt(ManagerRegistry $doctrine): Response
-    { 
+    {
         $em = $doctrine->getManager();
         $empruntRepository = $em->getRepository(Emprunt::class);
+        $livreRepository = $em->getRepository(Livre::class);
+        $emprunteurRepository = $em->getRepository(Emprunteur::class);
 
         $emprunteurRepository = $em->getRepository(Emprunteur::class);
 
-       
+
 
         $title = 'titre 123';
 
@@ -184,6 +187,38 @@ class TestController extends AbstractController
 
         $findIsNull = $empruntRepository->findSpecificIsNulll();
 
+
+
+        $livre3 = $empruntRepository->dateEmpruntLivre3(3);
+
+
+        // création emprunt
+
+        $newEmprunt = new Emprunt();
+        $newEmprunt->setDateEmprunt(new DateTime('01/12/2020 16:00:00'));
+        $newEmprunt->setDateRetour(null);
+        $emprunteurnewid = $emprunteurRepository->find(1);
+        $newEmprunt->setEmprunteur($emprunteurnewid);
+        $livreid = $livreRepository->find(1);
+        $newEmprunt->setLivre($livreid);
+        $em->persist($newEmprunt);
+        $em->flush();
+
+        // modification emprunt
+
+        $empruntId3 = $empruntRepository->find(3);
+        $empruntId3->setDateRetour(new DateTime('01/05/2020 10:00:00'));
+        $em->flush();
+
+        // suppresion
+
+        $id42 = $empruntRepository->find(42);
+
+        if ($id42) {
+            $em->remove($id42);
+            $em->flush();
+        }
+
         return $this->render('test/emprunt.html.twig', [
             'controller_name' => 'TestController',
             'title' => $title,
@@ -192,9 +227,8 @@ class TestController extends AbstractController
             'emprunteur3' => $emprunteur3,
             'retourEmprunt' => $retourEmprunt,
             'findIsNull' => $findIsNull,
-            
+            'livre3' => $livre3,
+
         ]);
     }
-
-    
 }

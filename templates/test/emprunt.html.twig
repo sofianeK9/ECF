@@ -44,5 +44,10 @@
 
  {% endfor %}
 
+ <h2>- les données de l'emprunt relié au livre dont l'id est `3`</h2>
+  {% for emprunt in livre3%}
 
+ <p> {{emprunt.id}}  {{emprunt.dateEmprunt|date('d/m/Y')}} {{emprunt.dateRetour|date('d/m/Y')}}  id : {{emprunt.emprunteur.id}} {{emprunt.createdAt|date('d/m/Y')}} {{emprunt.updatedAt|date('d/m/Y')}} {{emprunt.deletedAt|date('d/m/Y')}} </p>
+
+ {% endfor %}
 {% endblock %} 

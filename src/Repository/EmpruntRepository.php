@@ -80,13 +80,13 @@ class EmpruntRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-//    public function findOneBySomeField($value): ?Emprunt
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function dateEmpruntLivre3($value): array
+    {
+        return $this->createQueryBuilder('e')
+        ->select('e')
+        ->where('e.livre = :value')
+        ->setParameter('value', $value)
+        ->getQuery()
+        ->getResult();
+    }
 }

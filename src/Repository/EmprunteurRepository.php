@@ -52,8 +52,7 @@ class EmprunteurRepository extends ServiceEntityRepository
             ->andWhere('e.nom LIKE :keyword')
             ->orWhere('e.prenom LIKE :keyword')
             ->setParameter('keyword', "%$keyword%")
-            ->orderBy('e.nom', 'ASC')
-            ->orderBy('e.prenom', 'ASC')
+            ->orderBy('e.nom, e.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
