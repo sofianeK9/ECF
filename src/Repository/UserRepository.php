@@ -41,6 +41,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+     * Cette méthode cherche tous les users triés par ordre alphabétique d'email
      * @return User[] Returns an array of User objects
      */
     public function allUsersOrderByMail(): array
@@ -52,6 +53,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+
+    /**
+     * Cette méthode cherche un user avec un mail spécifique
+     * @param string $email est utilisé pour chercher l'email
+     * @return User[] Returns an array of User objects
+     */
     public function findByEmail(string $email): array
     {
         return $this->createQueryBuilder('u')
@@ -61,6 +68,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    /**
+     * Cette méthode cherche tous les users ayant le role ROLE_USER triés par ordre alphabétique d'email
+     * @return User[] Returns an array of User objects
+     */
     public function roles(): array
     {
         return $this->createQueryBuilder('u')
@@ -71,6 +82,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    /**
+     * Cette méthode cherche les utilisateurs inactifs dont l'attribut enabled est égal à false
+     * @return User[] Returns an array of User objects
+     */
     public function falseEnabled(): array
     {
         return $this->createQueryBuilder('u')
@@ -80,14 +95,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
-
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

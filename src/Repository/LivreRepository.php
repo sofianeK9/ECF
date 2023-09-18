@@ -22,6 +22,10 @@ class LivreRepository extends ServiceEntityRepository
         parent::__construct($registry, Livre::class);
     }
 
+    /**
+     * Cette méthode retourne la liste compléte de tous les livres triés par ordre alphabétique de titre
+     * @return Livre[] Returns an array of Livre objects
+     */
     public function findAllLivre(): array
     {
         return $this->createQueryBuilder('l')
@@ -31,6 +35,13 @@ class LivreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    /**
+     * Cette méthode retourne la liste des livres contenants le titre voule entré dans la variable $keyword trié par ordre
+     * alphabétique des livres
+     * @param  $keyword pour chercher le mot en question
+     * @return Livre[] Returns an array of Livre objects
+     */
     public function findTitreLorem(string $keyword): array
     {
         return $this->createQueryBuilder('l')
@@ -41,6 +52,12 @@ class LivreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Cette méthode retourne la liste des livres contenant le mot clé entré dans la variable $genre triés
+     * par ordre alphabétique de titre
+     * @param  $keyword pour chercher le mot en question
+     * @return Livre[] Returns an array of Livre objects
+     */
     public function findBooksByGenre(string $genres): array
     {
         return $this->createQueryBuilder('l')
@@ -51,17 +68,4 @@ class LivreRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
-
-
-    //    public function findOneBySomeField($value): ?Livre
-    //    {
-    //        return $this->createQueryBuilder('l')
-    //            ->andWhere('l.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
