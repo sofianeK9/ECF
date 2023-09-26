@@ -16,7 +16,7 @@ class Livre
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -167,5 +167,9 @@ class Livre
         $this->genres->removeElement($genre);
 
         return $this;
+    }
+    public function __toString()
+    {
+        return "id {$this->getId()}{$this->getTitre()}";
     }
 }

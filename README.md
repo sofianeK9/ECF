@@ -69,3 +69,14 @@ Puis ouvrir la page suivante : [https://local:host:8000](https://local:host:8000
 
 ![mon image]()
 
+## Tests des requêtes d'accès aux données
+
+Afin de tester les requêtes d'accès aux données, ouvrez les pages suivantes :
+
+Requêtes utilisateurs : [https://https://localhost:8000/test/user](https://https://localhost:8000/test/user)
+
+Requêtes livres : [https://https://localhost:8000/test/livre](https://https://localhost:8000/test/livre)
+
+Requêtes emprunteurs : [https://https://localhost:8000/test/emprunteur](https://https://localhost:8000/test/emprunteur)
+
+Requêtes emprunts : [https://https://localhost:8000/test/emprunt](https://https://localhost:8000/test/emprunt)
