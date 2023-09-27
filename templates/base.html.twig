@@ -26,6 +26,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
+          {% if is_granted('ROLE_ADMIN')%}
           <a class="nav-link active" aria-current="page" href="{{path('app_home')}}">Acceuil</a>
         </li>
         <li class="nav-item">
@@ -48,13 +49,14 @@
         <li class="nav-item">
           <a class="nav-link" href="{{path('app_admin_user_index')}}">User</a>
         </li>
+        {% endif %}
       </ul>
       {% if app.user %}
         <div class="mb-3">
-            Bonjour {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
+            Bonjour {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
         {% else %}
-        <div><a href="{{ path('app_login') }}">Connexion</a> </div>
+        <div><a href="{{ path('app_login') }}">Login</a> </div>
     {% endif %}
     </div>
   </div>
