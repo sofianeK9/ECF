@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\GenreRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -24,9 +25,12 @@ class Genre
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1,  max: 190)]
     #[ORM\Column(length: 190)]
     private ?string $nom = null;
 
+    #[Assert\Length(max: 1000)]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -96,6 +100,6 @@ class Genre
     }
     public function __toString()
     {
-        return "id {$this->getId()}{$this->getNom()} {$this->getDescription()}";
+        return "{$this->getNom()} {$this->getDescription()}";
     }
 }
