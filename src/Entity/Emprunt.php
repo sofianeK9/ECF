@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EmpruntRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -22,13 +23,15 @@ class Emprunt
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateEmprunt = null;
 
+    #[Assert\GreaterThan(propertyPath: 'dateEmprunt')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateRetour = null;
 
-    #[ORM\ManyToOne(inversedBy: 'emprunts')]
+    #[ORM\ManyToOne(inversedBy: 'emprunts',)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Livre $livre = null;
 
