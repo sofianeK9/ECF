@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>User index</h1>
+    <a href="{{ path('app_admin_user_new') }}">Create new Admin</a>
 
     <table class="table">
         <thead>
@@ -22,7 +23,11 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>
+                    {% for role in user.roles %}
+                    {{ role }} {% if not loop.last%},{% endif %}
+                    {% endfor %}
+                </td>
                 <td>{{ user.enabled ? 'Yes' : 'No' }}</td>
                 <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -39,5 +44,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_user_new') }}">Create new</a>
+    
 {% endblock %}

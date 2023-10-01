@@ -20,6 +20,10 @@
                 <td>{{ emprunt.emprunteur.prenom }}</td>
             </tr>
             <tr>
+                <th>Livre</th>
+                <td>{{ emprunt.livre.titre }}</td>
+            </tr>
+            <tr>
                 <th>DateEmprunt</th>
                 <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
